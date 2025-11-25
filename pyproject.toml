@@ -1,0 +1,119 @@
+[build-system]
+requires = ["setuptools >= 45", "wheel", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "prefect-volcengine"
+description = "Prefect integrations for Volcengine services"
+authors = [
+    {name = "Prefect Technologies, Inc.", email = "help@prefect.io"},
+]
+keywords = ["prefect", "volcengine", "serverless", "vefaas"]
+readme = "README.md"
+license = {text = "Apache License 2.0"}
+classifiers = [
+    "Natural Language :: English",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "prefect>=3.0.0",
+    "volcengine>=1.0.100",
+    "tenacity>=8.0.0",
+    "python-slugify>=8.0.0",
+]
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://github.com/PrefectHQ/prefect-volcengine"
+Repository = "https://github.com/PrefectHQ/prefect-volcengine"
+Documentation = "https://prefecthq.github.io/prefect-volcengine"
+
+[project.entry-points."prefect.collections"]
+prefect_volcengine = "prefect_volcengine"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "coverage",
+    "flake8",
+    "interrogate",
+    "isort",
+    "mypy",
+    "pre-commit",
+    "pytest",
+    "pytest-asyncio",
+    "pytest-cov",
+    "pytest-xdist",
+    "ruff",
+]
+docs = [
+    "mkdocs",
+    "mkdocs-gen-files",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+]
+
+[tool.setuptools]
+packages = ["prefect_volcengine"]
+
+[tool.setuptools.dynamic]
+version = {attr = "prefect_volcengine._version.__version__"}
+
+[tool.black]
+line-length = 88
+target-version = ["py38"]
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+known_first_party = ["prefect_volcengine"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"
+
+[tool.coverage.run]
+source = ["prefect_volcengine"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
