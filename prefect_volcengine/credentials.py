@@ -2,6 +2,7 @@
 
 from typing import Optional
 
+import volcenginesdkcore
 from prefect.blocks.core import Block
 from pydantic import Field, SecretStr
 
@@ -27,7 +28,7 @@ class VolcengineCredentials(Block):
         description="Volcengine secret access key"
     )
     region: str = Field(
-        default="us-east-1",
+        default="cn-beijing",
         description="Volcengine region"
     )
     endpoint_url: Optional[str] = Field(
@@ -35,8 +36,24 @@ class VolcengineCredentials(Block):
         description="Custom endpoint URL for Volcengine services"
     )
 
+    def get_volcengine_configuration(self) -> volcenginesdkcore.Configuration:
+        """Get Volcengine SDK configuration object."""
+        configuration = volcenginesdkcore.Configuration()
+        configuration.ak = self.access_key_id
+        configuration.sk = self.secret_access_key.get_secret_value()
+        configuration.region = self.region
+
+        if self.endpoint_url:
+            configuration.host = self.endpoint_url
+
+        # Optional: Enable debugging and logging
+        configuration.client_side_validation = True
+        configuration.debug = False
+
+        return configuration
+
     def get_volcengine_client_kwargs(self) -> dict:
-        """Get configuration for Volcengine client initialization."""
+        """Get configuration for Volcengine client initialization (backward compatibility)."""
         client_kwargs = {
             "access_key_id": self.access_key_id,
             "secret_access_key": self.secret_access_key.get_secret_value(),

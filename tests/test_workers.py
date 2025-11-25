@@ -14,14 +14,14 @@ def test_vefaas_worker_configuration():
     config = VeFaaSWorkerJobConfiguration(
         function_name="test-function",
         runtime="python3.9",
-        memory_size=256,
+        memory_spec=256,
         timeout=300,
         environment_variables={"TEST": "value"}
     )
 
     assert config.function_name == "test-function"
     assert config.runtime == "python3.9"
-    assert config.memory_size == 256
+    assert config.memory_spec == 256
     assert config.timeout == 300
     assert config.environment_variables == {"TEST": "value"}
 

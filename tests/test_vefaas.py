@@ -11,37 +11,37 @@ def test_vefaas_job_creation(volcengine_credentials):
         credentials=volcengine_credentials,
         function_name="test-function",
         runtime="python3.9",
-        memory_size=256,
+        memory_spec=256,
         timeout=300
     )
 
     assert job.function_name == "test-function"
     assert job.runtime == "python3.9"
-    assert job.memory_size == 256
+    assert job.memory_spec == 256
     assert job.timeout == 300
 
 
 def test_vefaas_job_memory_validation():
-    """Test VeFaaS job memory size validation."""
+    """Test VeFaaS job memory spec validation."""
     credentials = VolcengineCredentials(
         access_key_id="test",
         secret_access_key="test",
-        region="us-east-1"
+        region="cn-beijing"
     )
 
-    # Test invalid memory size
-    with pytest.raises(ValueError, match="Memory size must be between 128 and 3008 MB"):
+    # Test invalid memory spec
+    with pytest.raises(ValueError, match="Memory spec must be between 64 and 3008 MB"):
         VeFaaSJob(
             credentials=credentials,
             function_name="test",
-            memory_size=100  # Too low
+            memory_spec=50  # Too low
         )
 
-    with pytest.raises(ValueError, match="Memory size must be between 128 and 3008 MB"):
+    with pytest.raises(ValueError, match="Memory spec must be between 64 and 3008 MB"):
         VeFaaSJob(
             credentials=credentials,
             function_name="test",
-            memory_size=4000  # Too high
+            memory_spec=4000  # Too high
         )
 
 
@@ -50,7 +50,7 @@ def test_vefaas_job_timeout_validation():
     credentials = VolcengineCredentials(
         access_key_id="test",
         secret_access_key="test",
-        region="us-east-1"
+        region="cn-beijing"
     )
 
     # Test invalid timeout
@@ -75,7 +75,7 @@ def test_vefaas_job_preview(volcengine_credentials):
         credentials=volcengine_credentials,
         function_name="test-function",
         runtime="python3.9",
-        memory_size=256,
+        memory_spec=256,
         timeout=300
     )
 

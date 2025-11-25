@@ -27,7 +27,7 @@ classifiers = [
 requires-python = ">=3.8"
 dependencies = [
     "prefect>=3.0.0",
-    "volcengine>=1.0.100",
+    "volcengine-python-sdk>=1.0.118",
     "tenacity>=8.0.0",
     "python-slugify>=8.0.0",
 ]

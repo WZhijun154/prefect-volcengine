@@ -10,5 +10,5 @@ def volcengine_credentials():
     return VolcengineCredentials(
         access_key_id="test_access_key",
         secret_access_key="test_secret_key",
-        region="us-east-1"
+        region="cn-beijing"
     )
